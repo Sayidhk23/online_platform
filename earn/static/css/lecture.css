@@ -1,0 +1,106 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f2f4f8;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.lecture-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+}
+
+.lecture-card:hover {
+    transform: translateY(-4px);
+}
+
+/* PDF Link */
+.lecture-card a {
+    display: inline-block;
+    background-color: #eef4ff;
+    color: #0066cc;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    margin-bottom: 12px;
+    transition: all 0.2s ease-in-out;
+}
+
+.lecture-card a:hover {
+    background-color: #d4e4ff;
+    color: #004499;
+}
+
+/* Video Styling */
+video {
+    width: 50%;
+    max-width: 100%;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+/* Text Content */
+.card-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 12px;
+}
+
+.card-subtitle {
+    font-size: 16px;
+    font-weight: 500;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #444;
+    margin-top: 6px;
+}
+
+/* Add Lecture Button */
+a.add-lecture {
+    display: inline-block;
+    margin-top: 30px;
+    background-color: #28a745;
+    color: white;
+    font-weight: bold;
+    padding: 10px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+}
+
+a.add-lecture:hover {
+    background-color: #218838;
+}
+
+
+.lecture-card {
+  border: 1px solid #ddd;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.lecture-card span {
+  float: right;
+  font-size: 18px;
+  font-weight: bold;
+}
+

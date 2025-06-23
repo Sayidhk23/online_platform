@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+
+<!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+        <a href="{% url 'home' %}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>Admin Panel</h2>
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+    <!-- Navbar End -->
+
+<div class="container-fluid mt-4">
+  <div class="row">
+
+      <!-- Sidebar (optional if your base.html doesn't have one) -->
+        <div class="col-md-3 mb-3">
+            <div class="list-group">
+                <a href="{% url 'admin' %}" class="list-group-item list-group-item-action ">Dashboard</a>
+                <a href="{% url 'course' %}" class="list-group-item list-group-item-action ">Courses & Category</a>
+                <a href="{% url 'lessons' %}" class="list-group-item list-group-item-action active">Lessons & Lectures</a>
+                <a href="{% url 'enrollment' %}" class="list-group-item list-group-item-action"> Enrollment </a>
+                <a href="{% url 'profiles' %}" class="list-group-item list-group-item-action"> Candidate Profile </a>
+                <a href="{% url 'quiz' %}" class="list-group-item list-group-item-action"> Quiz </a>
+                <a href="{% url 'attempt' %}" class="list-group-item list-group-item-action"> Quiz Attempt </a>
+                <a href="{% url 'course_detail' %}" class="list-group-item list-group-item-action"> Course Detail </a>
+                <a href="{% url 'certificate' %}" class="list-group-item list-group-item-action"> Certificate </a>
+                <a href="{% url 'signout' %}" class="list-group-item list-group-item-action text-danger">Logout</a>
+            </div>
+        </div>
+
+
+    <!-- Main Content -->
+    <div class="col-md-9">
+      <h2 class="mb-3">Welcome, {{ user.username }}!</h2>
+
+      <!-- Lesson list -->
+      <div class="card-body">
+        <h2>Lessons</h2>
+        <a href="{% url 'add_lesson' %}" class="add-category">➕ Add Lesson</a>
+      </div>
+
+      {% for lesson in lesson %}
+        <div class="card my-3">
+          <div class="card-header">
+            Lesson {{ forloop.counter }}: {{ lesson.title }}
+          </div>
+          <div class="card-body">
+            <a href="{% url 'course_create' %}" class="add-category">➕ Add Lecture</a>
+
+            {% for l in lesson.lectures.all %}
+              <div class="continue mb-3">
+                <h5>{{ l.title }}</h5>
+                <p>{{ l.lesson }}</p>
+                <a href="{% url 'delete_lecture' l.id %}" class="btn btn-danger btn-sm">Delete</a>
+                <a href="{% url 'edit_lecture' l.id %}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="{% url 'lecture' lesson.course.id %}" class="btn btn-primary btn-sm">View</a>
+              </div>
+            {% empty %}
+              <p>No lectures added yet.</p>
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

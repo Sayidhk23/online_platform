@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/create.css' %}">
+ <h1>Add Course</h1>
+    <form method="POST"  enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ com.as_p }}
+        {% if com.errors %}
+            <ul class="errorlist">
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        <li>{{ field|capfirst }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <button type="submit"> Submit </button>
+<!--        <a href="{% url 'course' %}" class="Back">Back</a>-->
+    </form>
+
+
+{% endblock %}

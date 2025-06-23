@@ -1,0 +1,64 @@
+/* quiz.css */
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+form {
+  max-width: 700px;
+  margin: 0 auto;
+  background: #f9f9f9;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+div.question-block {
+  margin-bottom: 25px;
+  padding: 15px;
+  border-left: 4px solid #4CAF50;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+div.question-block p {
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+label {
+  display: block;
+  margin-left: 15px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+input[type="radio"] {
+  margin-right: 8px;
+  accent-color: #4CAF50;
+}
+
+button[type="submit"] {
+  display: block;
+  margin: 20px auto 0;
+  padding: 12px 24px;
+  background-color: #4CAF50;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #45a049;
+}
+

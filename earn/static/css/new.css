@@ -1,0 +1,70 @@
+/* Heading styles */
+h3 {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Add button style */
+.add-category {
+    display: inline-block;
+    background-color: #0d6efd;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.add-category:hover {
+    background-color: #0b5ed7;
+    text-decoration: none;
+}
+
+/* Attempt/Answer card */
+.continue {
+    border: 1px solid #ddd;
+    padding: 16px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.04);
+    background-color: #f9f9f9;
+    transition: 0.3s ease;
+}
+
+.continue:hover {
+    background-color: #f1f1f1;
+}
+
+/* Inside card content */
+.continue h4 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.continue p {
+    margin: 4px 0;
+    color: #555;
+}
+
+/* Delete button */
+.delete-lecture {
+    display: inline-block;
+    background-color: #dc3545;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+}
+
+.delete-lecture:hover {
+    background-color: #c82333;
+    text-decoration: none;
+}

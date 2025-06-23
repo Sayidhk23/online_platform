@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <link rel="stylesheet" href="{% static 'css/new.css' %}">
+
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+        <a href="{% url 'home' %}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>User Panel</h2>
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+    <!-- Navbar End -->
+
+    <div class="row">
+
+        <!-- Sidebar (optional if your base.html doesn't have one) -->
+        <div class="col-md-3 mb-3">
+            <div class="list-group">
+                <a href="{% url 'student' %}" class="list-group-item list-group-item-action ">Dashboard</a>
+                 <a href="{% url 'home' %}" class="list-group-item list-group-item-action">Home</a>
+                <a href="{% url 'course_list' %}" class="list-group-item list-group-item-action">My Courses</a>
+                <a href="{% url 'profile' %}" class="list-group-item list-group-item-action">Profile</a>
+                {% if user.is_instructor%}
+                <a href="{% url 'quiz_instructor' %}" class="list-group-item list-group-item-action active"> quiz </a>
+                <a href="{% url 'quiz_st' %}" class="list-group-item list-group-item-action"> Quiz Attempt </a>
+                {% endif %}
+                <a href="{% url 'signout' %}" class="list-group-item list-group-item-action text-danger">Logout</a>
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="col-md-9">
+            <h2 class="mb-3">Welcome, {{ user.username }}!</h2>
+
+          <!-- quiz  -->
+            <h3>Quiz</h3>
+            <a href="{% url 'add_quiz' %}" class="add-category">➕ Add quiz </a>
+             {% for q in quiz %}
+            <div class="continue">
+                <h4>  {{ q.title }}</h4>
+                <p>{{q.description}}</p>
+                <p> {{ q.lesson }}</p>
+                <a href="{% url 'edit_quiz' q.id %}" class="edit-lecture">Edit</a>
+                <a href="{% url 'delete_quiz' q.id %}" class="delete-lecture">Delete</a>
+            </div>
+            {% endfor %}
+
+            <!-- question  -->
+            <h3>Question</h3>
+            <a href="{% url 'add_question' %}" class="add-category">➕ Add question </a>
+             {% for qa in question %}
+            <div class="continue">
+                <h4>  {{ qa.quiz }}</h4>
+                <p>{{qa.text}}</p>
+                <a href="{% url 'edit_question' qa.id %}" class="edit-lecture">Edit</a>
+                <a href="{% url 'delete_question' qa.id %}" class="delete-lecture">Delete</a>
+            </div>
+            {% endfor %}
+
+            <!-- choice  -->
+            <h3>Choice</h3>
+            <a href="{% url 'add_choice' %}" class="add-category">➕ Add choice </a>
+             {% for ch in choice %}
+            <div class="continue">
+                <h4>  {{ ch.question }}</h4>
+                <p>{{ch.text}}</p>
+                <a href="{% url 'edit_choice' ch.id %}" class="edit-lecture">Edit</a>
+                <a href="{% url 'delete_choice' ch.id %}" class="delete-lecture">Delete</a>
+            </div>
+            {% endfor %}
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}

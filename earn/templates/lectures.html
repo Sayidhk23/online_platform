@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/lecture.css' %}">
+
+{% for lesson in lessons %}
+
+  <div class="container">
+    <li class="dropdown">
+<!--       <h2>{{ lesson.title }}</h2>-->
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fas fa-user-circle fa-lg">{{ lesson.title }}</i>
+            </a>
+     <ul class="dropdown-menu">
+    <!-- Lectures -->
+    {% for L in lesson.lectures.all %}
+         <div>
+             <h4 class="card-title">{{ L.title }}</h4>
+         </div>
+
+      <div class="lecture-card">
+        {% if L.pdf %}
+          <p><a href="{{ L.pdf.url }}" target="_blank"  onclick="markVideoViewed({{ L.id }})">📄 View PDF</a></p>
+        {% endif %}
+
+        {% if L.video_content %}
+          <div>
+            <video controls onended="markVideoWatched({{ L.id }})">
+              <source src="{{ L.video_content.url }}" type="video/mp4">
+            </video>
+          </div>
+        {% endif %}
+
+        <div>
+
+          <h5 class="card-subtitle">{{ L.course }}</h5>
+            <P>{{ L.text_content}}</P>
+        </div>
+
+        {% if user.is_instructor %}
+          <a href="{% url 'delete_lecture' L.id %}" class="delete-lecture">Delete</a>
+          <a href="{% url 'edit_lecture' L.id %}" class="edit-lecture">Edit</a>
+        {% endif %}
+      </div>
+    {% empty %}
+      <p>No lectures available.</p>
+    {% endfor %}
+
+    <!-- Quizzes related to this lesson -->
+        <div class="quizzes-list">
+            <h3>Quizzes</h3>
+            {% if lesson.quizzes.exists %}
+                <ul>
+            {% for quiz in lesson.quizzes.all %}
+                <li><a href="{% url 'quiz_detail' quiz.id %}">{{ quiz.title }}</a></li>
+            {% endfor %}
+                </ul>
+            {% else %}
+            <p>No quizzes available.</p>
+            {% endif %}
+
+        </div>
+
+                {% with p=progress.L.id %}
+      {% if p and p.watched_video and p.viewed_pdf and p.completed_quiz %}
+         <span style="color: blue;">✔️ Completed</span>
+      {% endif %}
+    {% endwith %}
+
+
+    {% if user.is_instructor %}
+      <a href="{% url 'course_create' %}" class="add-lecture">➕ Add Lecture</a>
+    {% endif %}
+        </ul>
+    </li>
+  </div>
+<script>
+  function markVideoWatched(lectureId) {
+    fetch(`/lecture/${lectureId}/mark_video/`);
+  }
+
+  function markPdfViewed(lectureId) {
+    fetch(`/lecture/${lectureId}/mark_pdf/`);
+  }
+</script>
+
+{% endfor %}
+{% endblock %}
+
+

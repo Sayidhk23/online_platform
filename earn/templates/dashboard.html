@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+        <a href="{% url 'home' %}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>User Panel</h2>
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+    <!-- Navbar End -->
+
+    <div class="row">
+
+        <!-- Sidebar (optional if your base.html doesn't have one) -->
+        <div class="col-md-3 mb-3">
+            <div class="list-group">
+                <a href="{% url 'student' %}" class="list-group-item list-group-item-action active">Dashboard</a>
+                <a href="{% url 'home' %}" class="list-group-item list-group-item-action">Home</a>
+                <a href="{% url 'course_list' %}" class="list-group-item list-group-item-action">My Courses</a>
+                <a href="{% url 'profile' %}" class="list-group-item list-group-item-action">Profile</a>
+                {% if user.is_instructor%}
+                <a href="{% url 'quiz_instructor' %}" class="list-group-item list-group-item-action"> Quiz </a>
+                <a href="{% url 'quiz_st' %}" class="list-group-item list-group-item-action"> Quiz Attempt </a>
+                {% endif %}
+                <a href="{% url 'signout' %}" class="list-group-item list-group-item-action text-danger">Logout</a>
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="col-md-9">
+            <h2 class="mb-3">Welcome, {{ user.username }}!</h2>
+            {% if user.is_student%}
+                <h6>(student)</h6>
+            {% else %}
+                <h6> (instructor) </h6>
+            {% endif %}
+
+            <!-- Profile -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4>Your Profile</h4>
+                    <p><strong>Full Name:</strong> {{ user.username }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                </div>
+            </div>
+
+            <!-- Course Stats -->
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="card text-white bg-primary">
+                        <div class="card-body">
+                            <h5 class="card-title">Courses</h5>
+                            <p class="card-text display-6">{{ courses|length }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-white bg-success">
+                        <div class="card-body">
+                            <h5 class="card-title">Lessons Completed</h5>
+                            <p class="card-text display-6">42</p> <!-- Replace with dynamic data -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-white bg-info">
+                        <div class="card-body">
+                            <h5 class="card-title">Hours Studied</h5>
+                            <p class="card-text display-6">18</p> <!-- Replace with dynamic data -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enrolled Courses -->
+            <div class="card">
+                <div class="card-body">
+                    <h4>Enrolled Courses</h4>
+                    {% if courses %}
+                        <div class="row">
+                            {% for course in courses %}
+                                <div class="col-md-6 mb-3">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ course.title }}</h5>
+                                            <p class="card-text">{{ course.description|truncatechars:100 }}</p>
+                                            <a href="{% url 'course_list'  %}" class="btn btn-outline-primary btn-sm">View Course</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted">You are not enrolled in any courses yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

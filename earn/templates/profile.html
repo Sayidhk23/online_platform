@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/line.css' %}">
+
+<div class="container mt-5">
+    <a href="{% url 'home' %}" class="btn btn-primary mb-3">← Back</a>
+    <div class="card shadow p-4">
+        <h2 class="mb-4">My Profile</h2>
+
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <img src="{{ student_profile.image.url }}" alt="Profile Picture" class="img-thumbnail mb-3" style="width: 200px; height: 200px; object-fit: cover;">
+                <h4>Name: {{ user.username }}</h4>
+                <p>Gmail: {{ user.email }}</p>
+            </div>
+
+            <div class="col-md-8">
+                <h4>Enrolled Courses</h4>
+                {% if courses %}
+                    <ul class="list-group">
+                        {% for course in courses %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a  href="{% url 'lecture' course.id %}">{{course.course}}</a>
+                                {% if course.is_free %}
+                                    <h4 class="mb-0">Free</h4>
+                                {% else %}
+                                    <h4 class="mb-0">Paid</h4>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">You are not enrolled in any courses yet.</p>
+                {% endif %}
+                {%for x in courses%}
+                {% if user.is_instructor %}
+                    <h2>Mentor: {{x.title}}</h2>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <a href="{% url 'signout' %}">Logout</a>
+    </div>
+</div>
+
+{% endblock %}

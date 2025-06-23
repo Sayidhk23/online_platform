@@ -1,0 +1,38 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/result.css' %}">
+
+
+<div class="container">
+  <h2>Quiz Result</h2>
+  <p class="score"><strong>Score:</strong> {{ attempt.score }}%</p>
+  <p class="date"><strong>Date:</strong> {{ attempt.timestamp }}</p>
+
+  <hr>
+
+  {% for answer in user_answers %}
+    <div class="result-block {% if not answer.selected_choice.is_correct %}incorrect{% endif %}">
+      <p><strong>Q:</strong> {{ answer.question.text }}</p>
+      <p>
+        <strong>Your answer:</strong>
+        <span class="{% if answer.selected_choice.is_correct %}correct-answer{% else %}incorrect-answer{% endif %}">
+          {{ answer.selected_choice.text }}
+        </span>
+      </p>
+
+      {% if not answer.selected_choice.is_correct %}
+        <p><strong>Correct answer:</strong>
+          {% for choice in answer.question.choices.all %}
+            {% if choice.is_correct %}
+              <span class="correct-answer">{{ choice.text }}</span>
+            {% endif %}
+          {% endfor %}
+        </p>
+      {% endif %}
+    </div>
+    <hr>
+  {% endfor %}
+
+  <a class="back-link" href="{% url 'lecture' course_id=attempt.quiz.lesson.course.id %}">⬅ Back to quizzes</a>
+</div>
+

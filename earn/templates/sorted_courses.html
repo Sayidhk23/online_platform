@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Sorted Courses by {{ sort_by }}</h2>
+
+<form method="get">
+  <select name="sort" onchange="this.form.submit()">
+    <option value="title" {% if sort_by == 'title' %}selected{% endif %}>Title</option>
+    <option value="price" {% if sort_by == 'price' %}selected{% endif %}>Price</option>
+    <option value="created_at" {% if sort_by == 'created_at' %}selected{% endif %}>Newest</option>
+  </select>
+</form>
+
+<ul>
+  {% for course in courses %}
+    <li>
+      <a href="{% url 'details' course.id %}">{{ course.title }}</a> - ₹{{ course.price }}
+    </li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

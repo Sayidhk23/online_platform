@@ -1,0 +1,85 @@
+{% extends 'base.html' %}  {% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/courses.css' %}">
+
+<!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+        <a href="{% url 'home' %}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>eLEARNING</h2>
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <a href="{% url 'home' %}" class="nav-item nav-link ">Home</a>
+                <a href="{% url 'about' %} " class="nav-item nav-link">About</a>
+                <a href="{% url 'course_list'  %}" class="nav-item nav-link active">Courses</a>
+
+
+<!--                <div class="nav-item dropdown">-->
+<!--                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>-->
+<!--                    <div class="dropdown-menu fade-down m-0">-->
+<!--                        <a href="team.html" class="dropdown-item">Our Team</a>-->
+<!--                        <a href="testimonial.htm" class="dropdown-item">Testimonial</a>-->
+<!--                        <a href="404.html" class="dropdown-item">404 Page</a>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
+            </div>
+
+
+            {% if user.is_authenticated %}
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fas fa-user-circle fa-lg"></i>
+            </a>
+            <ul class="dropdown-menu">
+            <li><a href="{% url 'profile' %}">Profile</a></li>
+            <li><a href="{% url 'signout' %}">Logout</a></li>
+            </ul>
+            </li>
+            {% else %}
+            <a href="{% url 'signup' %}">Login</a>
+            <a href="{% url 'register' %}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Join Now<i class="fa fa-arrow-right ms-3"></i></a>
+            {% endif %}
+        </div>
+    </nav>
+    <!-- Navbar End -->
+    <h1>Courses</h1>
+
+    {% if request.user.is_authenticated %}
+        <p>Welcome, {{ request.user.username }}!</p>
+
+        {% if request.user.is_superuser %}  {# Show "Create Course" link only to instructors #}
+            <a href="{% url 'course_create' %}">➕ Create a new course</a>
+        {% endif %}
+
+        {% if cours %}  {# Check if there are any courses #}
+            <div class="course-list">  {# Add a container for styling #}
+                {% for x in cours %}
+                    <div class="course-item">  {# Add a container for each course #}
+                           <a><img src="{{x.image.url}}" class="card-image-top" alt="course"></a>
+                                    {% if course %}
+                        <h2><a href="{% url 'course_detail' course.id %}">{{ x.title }}</a></h2>
+                                    {% endif %}
+                        <p>{{ x.description }}</p>
+
+                        {% if x.instructor %}
+                            <p>Instructor: {{ x.instructor.username }}</p>
+                        {% endif %}
+
+                        {# Add other course details here as needed (e.g., price, duration, etc.) #}
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No courses available yet.</p>
+        {% endif %}
+
+    {% else %}
+        <p>Please <a href="{% url 'login' %}">log in</a> to view courses.</p>
+    {% endif %}
+
+{% endblock %}
